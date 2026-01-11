@@ -1,0 +1,72 @@
+{
+    "_comment": "Custom Hytale Egg by DV8FromTheCode",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2026-01-01T00:00:00+00:00",
+    "name": "Hytale",
+    "author": "contact@dv8ftc.com",
+    "description": "This is a custom Pterodactyl egg for the Hytale server.",
+    "features": [],
+    "docker_images": {
+        "Java 21": "ghcr.io/pterodactyl/yolks:java_21"
+    },
+    "file_denylist": [],
+    "startup": "java -Xms128M -Xmx{{SERVER_MEMORY}}M -jar {{SERVER_JARFILE}} --bind 0.0.0.0:{{SERVER_PORT}} --assets {{ASSETS_PATH}} {{SERVER_ARGS}}",
+    "config": {
+        "files": "{}",
+        "startup": "{\n    \"done\": \"Authentication successful! Mode: OAUTH_DEVICE\"\n}",
+        "logs": "[]",
+        "stop": "stop"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!/bin/ash\n# Hytale Installation Script\n\napk add --no-cache curl unzip\n\necho -e \"Downloading Hytale Downloader...\"\ncurl -L -sS https://downloader.hytale.com/hytale-downloader.zip -o hytale-downloader.zip\n\necho -e \"Unzipping Downloader...\"\nunzip -o hytale-downloader.zip\nrm hytale-downloader.zip\n\necho -e \"Making Linux binary executable...\"\nchmod +x hytale-downloader-linux-amd64\n\n# Construct download command\nCMD=\"./hytale-downloader-linux-amd64 -download-path hytale-server.zip -skip-update-check\"\n\nif [ ! -z \"${PATCHLINE}\" ]; then\n    echo -e \"Using Patchline: ${PATCHLINE}\"\n    CMD=\"$CMD -patchline ${PATCHLINE}\"\nfi\n\necho -e \"Running Hytale Downloader...\"\necho -e \"IMPORTANT: If this is your first time installing, please check the console logs below!\"\necho -e \"You will need to authenticate by visiting the URL provided by the downloader.\"\n\n# Run the downloader\n$CMD\n\nif [ -f \"hytale-server.zip\" ]; then\n    echo -e \"Unzipping Server Files...\"\n    unzip -o hytale-server.zip\n    rm hytale-server.zip\nelse\n    echo -e \"Warning: hytale-server.zip not found. Download may have failed or required authentication.\"\nfi\n\necho -e \"Cleaning up installation files...\"\nrm -f hytale-downloader-linux-amd64 hytale-downloader-windows-amd64.exe",
+            "container": "ghcr.io/pterodactyl/installers:alpine",
+            "entrypoint": "ash"
+        }
+    },
+    "variables": [
+        {
+            "name": "Patchline",
+            "description": "The specific patchline (channel) to download from (e.g. 'pre-release'). Leave empty for default.",
+            "env_variable": "PATCHLINE",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Server Jar File",
+            "description": "The name of the server jar file.",
+            "env_variable": "SERVER_JARFILE",
+            "default_value": "HytaleServer.jar",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Assets Path",
+            "description": "Path to the Assets.zip file (relative to server root).",
+            "env_variable": "ASSETS_PATH",
+            "default_value": "Assets.zip",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Server Arguments",
+            "description": "Additional command line arguments to pass to the server.",
+            "env_variable": "SERVER_ARGS",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|string",
+            "field_type": "text"
+        }
+    ]
+}
