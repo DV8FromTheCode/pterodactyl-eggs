@@ -9,7 +9,7 @@ This egg is designed based on the available `hytale-downloader` tool and officia
 - **Testing is limited:** The egg installs dependencies and attempts to run the downloader, but full end-to-end functionality (server boot, gameplay) cannot be verified until you have valid access.
 
 ## Features
-- **Java 21 Support:** Uses the `ghcr.io/pterodactyl/yolks:java_21` image.
+- **Java 25 Support:** Uses the `ghcr.io/ptero-eggs/yolks:java_25` image.
 - **Automated Installation:** Script automatically downloads the Hytale Downloader, installs dependencies (`curl`, `unzip`), and attempts to fetch server files.
 - **Alpine Linux:** Lightweight installation container for faster deployment.
 
