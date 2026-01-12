@@ -25,6 +25,3 @@ This egg is designed based on the available `hytale-downloader` tool and officia
 | `SERVER_JARFILE` | The name of the server jar file. | `HytaleServer.jar` |
 | `ASSETS_PATH` | Path to the assets zip file. | `Assets.zip` |
 | `PATCHLINE` | specific download channel (e.g. `pre-release`). | *(empty)* |
-
-## License
-MIT
