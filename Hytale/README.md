@@ -3,6 +3,9 @@
 This is a custom Pterodactyl egg designed to host a **Hytale** server. It utilizes the official Hytale Downloader to handle server installation and updates.
 
 ## ⚠️ Important Disclaimer
+**This is an EXPERIMENTAL egg. Use at your own caution.**  
+The author takes **NO RESPONSIBILITY** for any issues, data loss, or server instability that may occur while using this egg.
+
 **Hytale is currently unreleased.** 
 This egg is designed based on the available `hytale-downloader` tool and official documentation. However, because the game servers are not yet public:
 - **Authentication required:** You cannot fully complete the installation process without a valid Hytale account that has official access to the game.
